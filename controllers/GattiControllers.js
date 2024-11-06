@@ -26,9 +26,9 @@ const store = (req, res) => {
         eta: req.body.eta
     }
 
-     gatti.push(gatto)
+    gatti.push(gatto)
 
-     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(gatti, null, 4)}`)
+    fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(gatti, null, 4)}`)
 
     return res.status(201).json({
         status: 201,
@@ -37,11 +37,59 @@ const store = (req, res) => {
     })
 }
 
+const update = (req, res) => {
 
+    const gatto = gatti.find((gatto) => gatto.nome.toLowerCase() === req.params.nome)
+
+    // check if the user is updating the correct pizza
+    if (!gatto) {
+        return res.status(404).json({ error: 'No gatto for name' })
+    }
+
+    // update the pizza object
+    gatto.nome = req.body.nome;
+    gatto.colore = req.body.colore
+    gatto.eta = req.body.eta
+
+
+    // update the js file
+    fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(gatti, null, 4)}`)
+
+    // return the updated menu item
+    res.status(200).json({
+        status: 200,
+        data: gatti
+    })
+
+}
+
+const destroy = (req, res) => {
+    // find the pizza by id
+    const gatto = gatti.find((gatto) => gatto.nome.toLowerCase() === req.params.nome)
+
+    // check if the user is updating the correct pizza
+    if (!gatto) {
+        return res.status(404).json({ error: 'No gatto foud for nome' })
+    }
+
+    // remove the pizza from the menu
+    const newGatto = gatti.filter((gatto) => gatto.nome.toLowerCase() !== req.params.nome)
+
+    // update the js file
+    fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(newGatto, null, 4)}`)
+
+    // return the updated menu item
+res.status(200).json({
+    status: 200,
+    data: newGatto
+})
+}
 
 
 module.exports = {
     index,
     show,
-    store
+    store,
+    update,
+    destroy
 }

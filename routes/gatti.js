@@ -9,5 +9,9 @@ router.get('/:nome', GattiControllers.show)
 
 router.post('/', GattiControllers.store)
 
+router.put('/:nome', GattiControllers.update)
+
+router.delete('/:nome', GattiControllers.destroy)
+
 
 module.exports = router

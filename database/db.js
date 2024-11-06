@@ -5,11 +5,6 @@ module.exports = [
         "eta": 3
     },
     {
-        "nome": "Pallina",
-        "colore": "bianco e nero",
-        "eta": 2
-    },
-    {
         "nome": "Leo",
         "colore": "arancione",
         "eta": 4
@@ -33,6 +28,5 @@ module.exports = [
         "nome": "Norberto",
         "colore": "Marrone",
         "eta": 2
-    },
-    {}
+    }
 ]
