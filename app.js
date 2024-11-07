@@ -13,14 +13,9 @@ app.listen(3000, () => {
 })
 
 
-app.use((err, req, res, next) => {
-    console.log('Error', err.message);
-    console.error(err.stack);
-    res.status(500).send({
-        message: 'Something went wrong',
-        error: err.message
-    })
     
+app.use('/gatti', (req, res, next) => {
+    throw new Error('Tou broken everything dude!')
 })
 
 
@@ -31,6 +26,12 @@ app.use('/gatti', gattiRoutes)
 
 app.use(notFoundMiddleware)
 
-app.use('/gatti', (req, res, next) => {
-    throw new Error('Tou broken everything dude!')
-})
+app.use((err, req, res, next) => {
+    console.log("Error: ", err.message);
+    // this prints the stack trace of the error
+    console.error(err.stack);
+    res.status(500).send({
+      message: "Something went wrong",
+      error: err.message
+    })
+  });
